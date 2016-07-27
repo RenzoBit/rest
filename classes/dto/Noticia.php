@@ -1,5 +1,4 @@
 <?php
-
 class Noticia {
 	public $idNoticia;
 	public $titulo;

@@ -1,5 +1,4 @@
 <?php
-
 class Producto {
 	public $idProducto;
 	public $nombre;

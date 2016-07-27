@@ -1,5 +1,4 @@
 <?php
-
 class Aviso {
 	public $idAviso;
 	public $titulo;
