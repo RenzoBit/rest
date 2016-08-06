@@ -2,7 +2,7 @@
 require_once './autoload.php';
 require_once './lib/Slim/Slim.php';
 
-// Autocarga de la librerÃ­a
+// Autocarga de la librería
 \Slim\Slim::registerAutoloader ();
 
 // Creando una instancia del Slim
@@ -34,7 +34,26 @@ $app->post ( '/productos', function () use ($app) {
 	$dao = new ProductoDAO ();
 	$dao->insertar ( $vo );
 	echo json_encode ( array (
-			'mensaje' => 'Producto registrado satisfactoriamente' 
+			'mensaje' => 'Producto registrado satisfactoriamente',
+			'estado' => 'CORRECTO' 
+	) );
+} );
+
+$app->get ( '/productos/producto/:idProducto', function ($idProducto) {
+	$dao = new ProductoDAO ();
+	$objeto = $dao->obtener ( $idProducto );
+	echo json_encode ( $objeto );
+} );
+
+$app->put ( '/productos/:idProducto/:nombre/:precio', function ($idProducto, $nombre, $precio) {
+	$dao = new ProductoDAO ();
+	$objeto = $dao->obtener ( $idProducto );
+	$objeto->nombre = $nombre;
+	$objeto->precio = $precio;
+	$dao->actualizar ( $objeto );
+	echo json_encode ( array (
+			'mensaje' => 'Producto actualizado satisfactoriamente',
+			'estado' => 'CORRECTO' 
 	) );
 } );
 

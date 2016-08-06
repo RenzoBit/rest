@@ -118,6 +118,30 @@ class ProductoDAO {
 			die ( $mensaje );
 		}
 	}
+	public function obtener($idProducto) {
+		try {
+			$db = Conexion::getConexion ();
+			$stmt = $db->prepare ( 'SELECT * FROM producto WHERE id_producto = ?' );
+			$stmt->bindValue ( 1, $idProducto, PDO::PARAM_INT );
+			$stmt->execute ();
+			$fila = $stmt->fetchObject ();
+			$vo = new Producto ();
+			$vo->idProducto = $fila->id_producto;
+			$vo->nombre = $fila->nombre;
+			$vo->descripcion = $fila->descripcion;
+			$vo->precio = $fila->precio;
+			$vo->stock = $fila->stock;
+			$vo->importancia = $fila->importancia;
+			$vo->imagen = $fila->imagen;
+			$vo->idCategoria = $fila->id_categoria;
+			return $vo;
+		} catch ( PDOException $e ) {
+			$db->rollback ();
+			$mensaje = '<b>Consulta inválida:</b> ' . $e->getMessage () . '<br/>';
+			$mensaje .= '<b>Consulta: </b>' . $sql;
+			die ( $mensaje );
+		}
+	}
 }
 
 ?>
